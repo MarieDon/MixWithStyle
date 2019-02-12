@@ -1,15 +1,20 @@
 package tester.ie.app.mixwithstyle.model;
 
+import java.io.Serializable;
+
 /**
  * Created by marie on 07/02/2019.
  */
 
-public class Cocktail {
+public class Cocktail implements Serializable {
     public String image;
     public String title;
     public String description;
     //public List<Ingredience>ingredience;
     public float rating;
+    public String drinkID;
+
+
 
     public Cocktail() {
     }
@@ -52,4 +57,8 @@ public class Cocktail {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+    public void setDrinkID(String drinkID) { this.drinkID = drinkID; }
+
+    public String getDrinkID() { return drinkID; }
 }

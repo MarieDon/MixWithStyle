@@ -24,6 +24,7 @@ import java.util.List;
 
 import tester.ie.app.mixwithstyle.adapters.CocktailAdapter;
 import tester.ie.app.mixwithstyle.model.Cocktail;
+import tester.ie.app.mixwithstyle.utils.Constants;
 
 public class CocktailRecyclerView extends AppCompatActivity {
 
@@ -32,7 +33,6 @@ public class CocktailRecyclerView extends AppCompatActivity {
     private List<Cocktail> cocktailList;
     private CocktailAdapter cocktailAdapter;
 
-    private String url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +49,7 @@ public class CocktailRecyclerView extends AppCompatActivity {
 
     public List<Cocktail> getCocktailList()
     {
-        JsonObjectRequest CocktailRequest = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+        JsonObjectRequest CocktailRequest = new JsonObjectRequest(Request.Method.GET, Constants.URL+"filter.php?c=Cocktail", new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -62,6 +62,7 @@ public class CocktailRecyclerView extends AppCompatActivity {
                         cock.image = drinkArray.getString("strDrinkThumb");
                         cock.title = drinkArray.getString("strDrink");
                         cock.description = "Margharita";
+                        cock.drinkID = drinkArray.getString("idDrink");
                         cocktailList.add(cock);
                     }
                     cocktailAdapter.notifyDataSetChanged();

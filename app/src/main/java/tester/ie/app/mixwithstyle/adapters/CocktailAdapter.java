@@ -1,19 +1,26 @@
 package tester.ie.app.mixwithstyle.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
+import tester.ie.app.mixwithstyle.CocktailRecyclerView;
+import tester.ie.app.mixwithstyle.MainActivity;
 import tester.ie.app.mixwithstyle.R;
+import tester.ie.app.mixwithstyle.SeeMore;
 import tester.ie.app.mixwithstyle.model.Cocktail;
 
 /**
@@ -41,7 +48,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
         Cocktail cocktails = cocktailList.get(position);
         String cocktailImage = cocktails.getImage();
         holder.title.setText(cocktails.getTitle());
-        holder.desc.setText(cocktails.getDescription());
+//        holder.moreDetails.setText(cocktails.getDescription());
         Picasso.get().load(cocktailImage).into(holder.image);
 
     }
@@ -51,20 +58,39 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
         return cocktailList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
-        public TextView desc;
+        public Button moreDetails;
         public ImageView image;
 
-        public ViewHolder(View itemView, Context context) {
+        public ViewHolder(View itemView, final Context context) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            desc = itemView.findViewById(R.id.desc);
+            moreDetails = itemView.findViewById(R.id.more_details_btn);
             image = itemView.findViewById(R.id.cocktail_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Cocktail cocktail = cocktailList.get(getAdapterPosition());
+                    Intent intent = new Intent(context, SeeMore.class);
+                    intent.putExtra("cocktail",  cocktail);
+                    ctx.startActivity(intent);
+                    ((CocktailRecyclerView) ctx).recreate();
+
+                }
+            });
 
         }
 
 
+        @Override
+        public void onClick(View v) {
+
+        }
     }
+
+
+
 }
