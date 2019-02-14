@@ -1,6 +1,7 @@
 package tester.ie.app.mixwithstyle;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import tester.ie.app.mixwithstyle.adapters.ViewPagerAdapter;
 import tester.ie.app.mixwithstyle.model.Cocktail;
 import tester.ie.app.mixwithstyle.utils.Constants;
 
@@ -29,37 +31,49 @@ public class SeeMore extends AppCompatActivity
     public String cocktailID;
     private Cocktail cocktails;
     private RequestQueue queue;
-    private ImageView cocktail_details_img;
-    private TextView cocktail_details_title;
+    private ImageView cocktailDetailsImg;
+    private TextView cocktailDetailsTitle;
     private TabLayout tablayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
 
-        cocktail_details_img = findViewById(R.id.cocktail_details_img);
-        cocktail_details_title = findViewById(R.id.cocktail_details_title);
+        cocktailDetailsImg = findViewById(R.id.cocktail_details_img);
+        cocktailDetailsTitle = findViewById(R.id.cocktail_details_title);
         tablayout = findViewById(R.id.tablayout);
+        viewPager = findViewById(R.id.viewpager);
         queue = Volley.newRequestQueue(this);
         cocktails = (Cocktail) getIntent().getSerializableExtra("cocktail");
         String id = cocktails.getDrinkID();
 
-        getCardDetails(id);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
+
+        // Give the TabLayout the ViewPager
+        tablayout.setupWithViewPager(viewPager);
+        tablayout.getTabAt(0).setText(getResources().getString(R.string.category_ingredients));
+        tablayout.getTabAt(1).setText(getResources().getString(R.string.category_method));
+        tablayout.setTabTextColors(R.color.colorBlack, R.color.colorPrimary);
+
+        getCocktailDetails(id);
 
     }
 
-
-    private void getCardDetails(String id) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, DETAILSURL + id, new Response.Listener<JSONObject>() {
+    private void getCocktailDetails(String id) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constants.DETAILSURL + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    String imgThumb = response.getString("strDrinkThumb");
-                    Picasso.get().load(imgThumb).into(cocktail_details_img);
-//                    cock.title = cocktails.setTitle();
-//                    cock.description = "Margharita";
-//                    cock.drinkID = cocktails.setDrinkID();
+                    JSONArray drink = response.getJSONArray("drinks");
+                    JSONObject drinkObj = drink.getJSONObject(0);
+                    Picasso.get().load(drinkObj.getString("strDrinkThumb")).into(cocktailDetailsImg);
+                    cocktailDetailsTitle.setText(drinkObj.getString("strDrink"));
+
+
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -74,5 +88,4 @@ public class SeeMore extends AppCompatActivity
 
         queue.add(jsonObjectRequest);
     }
-
 }

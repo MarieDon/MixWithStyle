@@ -1,6 +1,9 @@
 package tester.ie.app.mixwithstyle.model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import tester.ie.app.mixwithstyle.fragments.IngredientsFragment;
 
 /**
  * Created by marie on 07/02/2019.
@@ -10,7 +13,7 @@ public class Cocktail implements Serializable {
     public String image;
     public String title;
     public String description;
-    //public List<Ingredience>ingredience;
+    public List<Ingredients> ingredience;
     public float rating;
     public String drinkID;
 
