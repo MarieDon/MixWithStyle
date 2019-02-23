@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "69932430873",
+    "firebase_url": "https://mixwithstyle-ea35d.firebaseio.com",
+    "project_id": "mixwithstyle-ea35d",
+    "storage_bucket": "mixwithstyle-ea35d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69932430873:android:f81f1732f241c1fe",
+        "android_client_info": {
+          "package_name": "tester.ie.app.mixwithstyle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69932430873-7eajecpvfcnn4o11pajs9qppkf5v3u4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tester.ie.app.mixwithstyle",
+            "certificate_hash": "944292c366b0391f20eb879d5fe423eec827704f"
+          }
+        },
+        {
+          "client_id": "69932430873-2qg2vjr2132hvuu9u3fvg1t6das7su6l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD20-ebk8ShJGGyS-aXFlh2_0tICfpPJdA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69932430873-2qg2vjr2132hvuu9u3fvg1t6das7su6l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

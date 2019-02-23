@@ -8,6 +8,7 @@ public class Ingredients {
     private String ingredientFive;
     private String ingredientSix;
 
+
     public Ingredients() {
     }
 
