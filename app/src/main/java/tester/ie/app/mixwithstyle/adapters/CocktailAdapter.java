@@ -61,14 +61,14 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
-        public Button moreDetails;
+        public Button faves;
         public ImageView image;
 
         public ViewHolder(View itemView, final Context context) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            moreDetails = itemView.findViewById(R.id.more_details_btn);
             image = itemView.findViewById(R.id.cocktail_image);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,6 +81,13 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
 
                 }
             });
+
+//            faves.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    faves.setCompoundDrawablesWithIntrinsicBounds(null, null, v.getResources().getDrawable(android.R.drawable.btn_star_big_on),null);
+//                }
+//            });
 
         }
 

@@ -4,24 +4,25 @@ package tester.ie.app.mixwithstyle.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import tester.ie.app.mixwithstyle.R;
+import tester.ie.app.mixwithstyle.adapters.IngredientsAdapter;
+import tester.ie.app.mixwithstyle.utils.IngredientsList;
+
+import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
 public class IngredientsFragment extends Fragment {
 
     private View view;
-    private TextView ingred1;
-    private TextView ingred2;
-    private TextView ingred3;
-    private TextView ingred4;
-    private TextView ingred5;
-    private TextView ingred6;
-    public IngredientsFragment() {
-    }
+    private IngredientsAdapter adapter;
+    private RecyclerView ingredientsRV;
+    private TextView ingredient;
 
 
     @Override
@@ -32,11 +33,14 @@ public class IngredientsFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        ingred1 = view.findViewById(R.id.ingredients_one_text);
-        ingred2 = view.findViewById(R.id.ingredients_two_text);
-        ingred3 = view.findViewById(R.id.ingredients_three_text);
-        ingred4 = view.findViewById(R.id.ingredients_four_text);
-        ingred5 = view.findViewById(R.id.ingredients_five_text);
-        ingred6 = view.findViewById(R.id.ingredients_six_text);
+        ingredient = view.findViewById(R.id.ingredient_text);
+        ingredientsRV = view.findViewById(R.id.ingredients_rv);
+        ingredientsRV.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        adapter = new IngredientsAdapter(this.getActivity(), INGREDIENTS);
+        ingredientsRV.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 }
+
+

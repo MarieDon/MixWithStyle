@@ -1,11 +1,13 @@
 package tester.ie.app.mixwithstyle;
 
 import android.content.SharedPreferences;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,14 +31,19 @@ import java.util.ArrayList;
 
 import tester.ie.app.mixwithstyle.adapters.ViewPagerAdapter;
 import tester.ie.app.mixwithstyle.model.Cocktail;
+import tester.ie.app.mixwithstyle.model.FavouriteCocktails;
 import tester.ie.app.mixwithstyle.model.Ingredients;
 import tester.ie.app.mixwithstyle.utils.Constants;
+import tester.ie.app.mixwithstyle.utils.IngredientsList;
+
+import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
 public class SeeMore extends AppCompatActivity
 {
     public static final String DETAILSURL = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
     public String cocktailID;
-    public String desc = "";
+    String id, imageUrl, title, desc;
+    float rating;
     public Bundle bundle;
     private Cocktail cocktails;
     private RequestQueue queue;
@@ -44,33 +51,50 @@ public class SeeMore extends AppCompatActivity
     private TextView cocktailDetailsTitle;
     private TabLayout tablayout;
     private ViewPager viewPager;
+    private FirebaseDatabase database;
+    private DatabaseReference favourites;
+    private FavouriteCocktails myFavouriotes;
+    private FloatingActionButton favFab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_more);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        database = FirebaseDatabase.getInstance();
+        favourites = database.getReference("Favourites Cocktails");
+        favFab = findViewById(R.id.floatingActionButton);
         bundle = new Bundle();
-
-        myRef.setValue("Praise the lord!!");
-
         cocktailDetailsImg = findViewById(R.id.cocktail_details_img);
         cocktailDetailsTitle = findViewById(R.id.cocktail_details_title);
         tablayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
         queue = Volley.newRequestQueue(this);
         cocktails = (Cocktail) getIntent().getSerializableExtra("cocktail");
-        String id = cocktails.getDrinkID();
+        id = cocktails.getDrinkID();
+        imageUrl = cocktails.getImage();
+        title = cocktails.getTitle();
+        desc = cocktails.getDescription();
+        rating = cocktails.getRating();
 
+        favFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveToFirebase(imageUrl, title, desc, rating);
+            }
+        });
+
+
+
+        saveToFirebase(imageUrl, title, desc, rating);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
 
         // Give the TabLayout the ViewPager
         tablayout.setupWithViewPager(viewPager);
-        tablayout.getTabAt(0).setText(getResources().getString(R.string.category_ingredients));
-        tablayout.getTabAt(1).setText(getResources().getString(R.string.category_method));
+        tablayout.getTabAt(0).setText("Ingredients");
+        tablayout.getTabAt(1).setText("Method");
         tablayout.setTabTextColors(R.color.colorBlack, R.color.colorPrimary);
 
         getCocktailDetails(id);
@@ -79,8 +103,6 @@ public class SeeMore extends AppCompatActivity
     }
 
     private void getCocktailDetails(String id) {
-        final ArrayList<String> ingredients = new ArrayList<>();
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constants.DETAILSURL + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -89,15 +111,15 @@ public class SeeMore extends AppCompatActivity
                     JSONObject drinkObj = drink.getJSONObject(0);
                     Picasso.get().load(drinkObj.getString("strDrinkThumb")).into(cocktailDetailsImg);
                     cocktailDetailsTitle.setText(drinkObj.getString("strDrink"));
-                    ingredients.add(drinkObj.getString("strIngredient1"));
-                    ingredients.add(drinkObj.getString("strIngredient2"));
-                    ingredients.add(drinkObj.getString("strIngredient3"));
-                    ingredients.add(drinkObj.getString("strIngredient4"));
-                    ingredients.add(drinkObj.getString("strIngredient5"));
-                    ingredients.add(drinkObj.getString("strIngredient6"));
+                    IngredientsList.INGREDIENTS.clear();
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient1"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient2"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient3"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient4"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient5"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient6"));
                     desc = drinkObj.getString("strInstructions");
-
-                    bundle.putString("DESC", desc);
+                    sharedPrefs(desc);
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -115,8 +137,15 @@ public class SeeMore extends AppCompatActivity
     }
 
     public void sharedPrefs(String description){
-        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS", MODE_PRIVATE).edit();
-        editor.putString("DESC",description);
+        SharedPreferences sharedPerfs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPerfs.edit();
+        editor.putString("DESC", description);
         editor.apply();
+    }
+
+    private void saveToFirebase(String imageUrl, String title, String desc, float rating){
+        String firebaseId = database.getReference("Favourite Cocktails").push().getKey();
+        myFavouriotes = new FavouriteCocktails(imageUrl, title, desc,  rating);
+        favourites.child(firebaseId).setValue(myFavouriotes);
     }
 }

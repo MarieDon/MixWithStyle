@@ -16,14 +16,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import tester.ie.app.mixwithstyle.model.Cocktail;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static ArrayList<String> INGREDIENTS = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
     }
