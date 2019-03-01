@@ -1,5 +1,6 @@
 package tester.ie.app.mixwithstyle;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -53,7 +54,7 @@ public class SeeMore extends AppCompatActivity
     private ViewPager viewPager;
     private FirebaseDatabase database;
     private DatabaseReference favourites;
-    private FavouriteCocktails myFavouriotes;
+    private FavouriteCocktails myFavourites;
     private FloatingActionButton favFab;
 
 
@@ -85,8 +86,6 @@ public class SeeMore extends AppCompatActivity
         });
 
 
-
-        saveToFirebase(imageUrl, title, desc, rating);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
@@ -145,7 +144,8 @@ public class SeeMore extends AppCompatActivity
 
     private void saveToFirebase(String imageUrl, String title, String desc, float rating){
         String firebaseId = database.getReference("Favourite Cocktails").push().getKey();
-        myFavouriotes = new FavouriteCocktails(imageUrl, title, desc,  rating);
-        favourites.child(firebaseId).setValue(myFavouriotes);
+        myFavourites = new FavouriteCocktails(imageUrl, title, desc,  rating);
+        favourites.child(firebaseId).setValue(myFavourites);
+        startActivity(new Intent(SeeMore.this, FavouriteActivity.class));
     }
 }
