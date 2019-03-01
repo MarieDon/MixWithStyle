@@ -57,23 +57,13 @@ public class FavouriteActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.favRecycler);
         //saveFavouritesBtn = findViewById(R.id.saveToFavBtn);
         database = FirebaseDatabase.getInstance();
+        favourites = database.getReference();
         favouriteslList = new ArrayList<>();
         getFavouriteslCocktailList();
-
-
-
-
-//        saveFavouritesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
     }
 
-    public void getFavouriteslCocktailList()
-    {
-        database.getReference().child("Favourite Cocktails").addValueEventListener(new ValueEventListener() {
+    public void getFavouriteslCocktailList() {
+        database.getReference("Favourites Cocktails").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

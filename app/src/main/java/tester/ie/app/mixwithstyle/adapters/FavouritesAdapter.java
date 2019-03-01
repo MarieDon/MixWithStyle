@@ -32,7 +32,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     public List<FavouriteCocktails> favouritesList;
     public Context ctx;
 
-    public FavouritesAdapter(List<FavouriteCocktails> cocktailList, Context ctx) {
+    public FavouritesAdapter(List<FavouriteCocktails> favouritesList, Context ctx) {
         this.favouritesList = favouritesList;
         this.ctx = ctx;
     }
@@ -40,7 +40,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     @Override
     public FavouritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.fruitycocktails, parent,false);
+                inflate(R.layout.activity_favourite, parent,false);
         return new ViewHolder(view, ctx);
     }
 
@@ -67,8 +67,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
         public ViewHolder(View itemView, final Context context) {
             super(itemView);
-            title = itemView.findViewById(R.id.title);
-            image = itemView.findViewById(R.id.cocktail_image);
+            title = itemView.findViewById(R.id.title1);
+            image = itemView.findViewById(R.id.cocktail_image1);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

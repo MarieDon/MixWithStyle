@@ -8,6 +8,9 @@ public class FavouriteCocktails {
     public String description;
     public float rating;
 
+    public FavouriteCocktails() {
+    }
+
     public FavouriteCocktails(String image, String title, String description, float rating) {
         this.image = image;
         this.title = title;
