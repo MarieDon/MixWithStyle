@@ -1,6 +1,8 @@
 package tester.ie.app.mixwithstyle.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import tester.ie.app.mixwithstyle.R;
+import tester.ie.app.mixwithstyle.utils.PreferenceHelper;
 
 public class MethodFragment extends Fragment {
     private View view;
@@ -28,12 +31,9 @@ public class MethodFragment extends Fragment {
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        descBundle = new Bundle();
-        descBundle.getString("DESC");
-
         methodText = view.findViewById(R.id.method_text);
-
-       methodText.setText(descBundle.toString());
+        String method = PreferenceHelper.getPref("Desc", getContext());
+       methodText.setText(method);
 
     }
 }

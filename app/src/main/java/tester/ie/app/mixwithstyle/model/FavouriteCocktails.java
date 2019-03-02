@@ -3,6 +3,7 @@ package tester.ie.app.mixwithstyle.model;
 import java.util.ArrayList;
 
 public class FavouriteCocktails {
+    public String id;
     public String image;
     public String title;
     public String description;
@@ -16,6 +17,14 @@ public class FavouriteCocktails {
         this.title = title;
         this.description = description;
         this.rating = rating;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImage() {

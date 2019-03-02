@@ -81,7 +81,6 @@ public class CocktailRecyclerView extends AppCompatActivity {
                         Cocktail cock = new Cocktail();
                         cock.image = drinkArray.getString("strDrinkThumb");
                         cock.title = drinkArray.getString("strDrink");
-                        cock.description = "Margharita";
                         cock.drinkID = drinkArray.getString("idDrink");
                         cocktailList.add(cock);
                     }

@@ -3,6 +3,7 @@ package tester.ie.app.mixwithstyle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -41,7 +42,7 @@ import tester.ie.app.mixwithstyle.utils.IngredientsList;
 
 import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
-public class FavouriteActivity extends AppCompatActivity {
+public class FavouriteActivity extends AppCompatActivity implements FavouritesAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private List<FavouriteCocktails> favouriteslList;
@@ -49,6 +50,7 @@ public class FavouriteActivity extends AppCompatActivity {
     private Button saveFavouritesBtn;
     private FirebaseDatabase database;
     private DatabaseReference favourites;
+    String id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class FavouriteActivity extends AppCompatActivity {
         favourites = database.getReference();
         favouriteslList = new ArrayList<>();
         getFavouriteslCocktailList();
+
     }
 
     public void getFavouriteslCocktailList() {
@@ -70,10 +73,11 @@ public class FavouriteActivity extends AppCompatActivity {
                   favouriteslList.clear();
                   for(DataSnapshot myfaves : dataSnapshot.getChildren()){
                       FavouriteCocktails favecocktails = myfaves.getValue(FavouriteCocktails.class);
+                      favecocktails.setId(myfaves.getKey());
                       favouriteslList.add(favecocktails);
-
-                      recyclerView.setLayoutManager(new LinearLayoutManager(FavouriteActivity.this));
+                      recyclerView.setLayoutManager(new GridLayoutManager(FavouriteActivity.this, 2));
                       favouritesAdapter = new FavouritesAdapter(favouriteslList, FavouriteActivity.this);
+                      favouritesAdapter.setClickListener(FavouriteActivity.this);
                       recyclerView.setAdapter(favouritesAdapter);
                       favouritesAdapter.notifyDataSetChanged();
                   }
@@ -88,27 +92,13 @@ public class FavouriteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View view, int position) {
+        DatabaseReference deleteItem = FirebaseDatabase.getInstance().getReference("Favourites Cocktails").child(favouriteslList.get(position).getId());
+        deleteItem.removeValue();
+        favouritesAdapter.notifyDataSetChanged();
 
-
+        Toast.makeText(this, "Deleted item with the key of " + favouriteslList.get(position).getId() + " Successfully", Toast.LENGTH_SHORT).show();
+    }
 }
 
-//    @override  onDataChange(dataSnapshot:DataSnapshot) {
-//        if (dataSnapshot.exists()) {
-//            favList.clear()
-//            for (fav in dataSnapshot.children) {
-//                val myFavs = fav.getValue(Favourites::class.java)!!
-//                        favList.add(myFavs)
-//                mFavRecyclerViewAdapter = FavouritesRecyclerViewAdapter(favList, context!!){
-//                    deleteFavourite(favList[it].favId!!)
-//                }
-//                layoutManager = LinearLayoutManager(context)
-//                mFavRecyclerView.layoutManager = layoutManager
-//                mFavRecyclerView.adapter = mFavRecyclerViewAdapter
-//            }
-//        }
-//    }
-//    override onCancelled(databaseError: DatabaseError) {
-//        Timber.e(databaseError.toException())
-//        Toast.makeText(context, "Failed to load Message.", Toast.LENGTH_SHORT).show()
-//    }
-//})

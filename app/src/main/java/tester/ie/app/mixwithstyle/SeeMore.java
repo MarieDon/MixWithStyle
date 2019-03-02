@@ -36,6 +36,7 @@ import tester.ie.app.mixwithstyle.model.FavouriteCocktails;
 import tester.ie.app.mixwithstyle.model.Ingredients;
 import tester.ie.app.mixwithstyle.utils.Constants;
 import tester.ie.app.mixwithstyle.utils.IngredientsList;
+import tester.ie.app.mixwithstyle.utils.PreferenceHelper;
 
 import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
@@ -118,7 +119,7 @@ public class SeeMore extends AppCompatActivity
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient5"));
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient6"));
                     desc = drinkObj.getString("strInstructions");
-                    sharedPrefs(desc);
+                    PreferenceHelper.putPref("Desc", desc, getApplicationContext());
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -135,12 +136,6 @@ public class SeeMore extends AppCompatActivity
         queue.add(jsonObjectRequest);
     }
 
-    public void sharedPrefs(String description){
-        SharedPreferences sharedPerfs = getSharedPreferences("MY_PREFS", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPerfs.edit();
-        editor.putString("DESC", description);
-        editor.apply();
-    }
 
     private void saveToFirebase(String imageUrl, String title, String desc, float rating){
         String firebaseId = database.getReference("Favourite Cocktails").push().getKey();

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tester.ie.app.mixwithstyle.SeeMore">
+    tools:context="tester.ie.app.mixwithstyle.SeeMore"
+    android:background="#F4F8FF">
 
     <ImageView
         android:id="@+id/cocktail_details_img"
@@ -72,10 +73,11 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="24dp"
         android:clickable="true"
-        android:background="@color/colorWhite"
+        android:background="#F4F8FF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_favorite"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        />
 
 </android.support.constraint.ConstraintLayout>

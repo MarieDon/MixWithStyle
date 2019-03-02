@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tester.ie.app.mixwithstyle.MenuActivity">
+    tools:context="tester.ie.app.mixwithstyle.MenuActivity"
+    android:background="#F4F8FF">
 
     <!--<android.support.design.widget.AppBarLayout-->
         <!--android:id="@+id/appBarLayout"-->
