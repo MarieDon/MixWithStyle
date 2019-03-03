@@ -12,7 +12,11 @@ You can also rate the drinks by gold stars.
 [Youtube Demo](https://youtu.be/9cAR3IYOUOc)
 
 REFERENCES
+
 [Firebase](https://console.firebase.google.com/u/0/project/mixwithstyle-ea35d/database/mixwithstyle-ea35d/data)
+
 [Android Docs](https://developer.android.com/docs)
+
 [Stackoverflow](https://stackoverflow.com/)
+
 [Cocktails API](https://www.thecocktaildb.com/api.php)
