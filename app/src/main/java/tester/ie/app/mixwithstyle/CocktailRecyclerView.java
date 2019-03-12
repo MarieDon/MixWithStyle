@@ -78,16 +78,13 @@ public class CocktailRecyclerView extends AppCompatActivity {
 
                     for (int i = 0; i < Drinks.length(); i++) {
                         JSONObject drinkArray = Drinks.getJSONObject(i);
-                        Cocktail cock = new Cocktail();
-                        cock.image = drinkArray.getString("strDrinkThumb");
-                        cock.title = drinkArray.getString("strDrink");
-                        cock.drinkID = drinkArray.getString("idDrink");
-                        cocktailList.add(cock);
+                        Cocktail cocktails = new Cocktail();
+                        cocktails.image = drinkArray.getString("strDrinkThumb");
+                        cocktails.title = drinkArray.getString("strDrink");
+                        cocktails.drinkID = drinkArray.getString("idDrink");
+                        cocktailList.add(cocktails);
                     }
                     cocktailAdapter.notifyDataSetChanged();
-
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -69,7 +69,6 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
             title = itemView.findViewById(R.id.title);
             image = itemView.findViewById(R.id.cocktail_image);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
