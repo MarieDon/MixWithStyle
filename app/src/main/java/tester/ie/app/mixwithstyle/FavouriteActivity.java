@@ -42,7 +42,7 @@ import tester.ie.app.mixwithstyle.utils.IngredientsList;
 
 import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
-public class FavouriteActivity extends AppCompatActivity implements FavouritesAdapter.ItemClickListener {
+public class FavouriteActivity extends Drawer_Activity implements FavouritesAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private List<FavouriteCocktails> favouriteslList;

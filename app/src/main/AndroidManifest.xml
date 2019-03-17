@@ -11,19 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FavouriteActivity"></activity>
-        <activity android:name=".MainActivity" />
         <activity
-            android:name=".MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".Drawer_Activity"
+            android:label="@string/title_activity_drawer_"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".FavouriteActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".SeeMore" />
-        <activity android:name=".CocktailRecyclerView"></activity>
+        <activity android:name=".CocktailRecyclerView" />
     </application>
 
 </manifest>
