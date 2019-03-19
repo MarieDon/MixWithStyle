@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     private EditText loginEmail;
     private EditText loginPassword;
@@ -55,6 +56,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = mAuth.getCurrentUser();
+        if (currentUser != null){
+            startActivity(new Intent(LoginActivity.this, CocktailRecyclerView.class));
+        }
+    }
 
     private void loginFirebaseUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)

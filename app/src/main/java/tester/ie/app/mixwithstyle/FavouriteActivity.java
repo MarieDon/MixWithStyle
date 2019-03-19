@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ import tester.ie.app.mixwithstyle.utils.IngredientsList;
 
 import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
-public class FavouriteActivity extends Drawer_Activity implements FavouritesAdapter.ItemClickListener {
+public class FavouriteActivity extends BaseActivity implements FavouritesAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private List<FavouriteCocktails> favouriteslList;
@@ -55,17 +56,18 @@ public class FavouriteActivity extends Drawer_Activity implements FavouritesAdap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourite);
+        View view = LayoutInflater.from(this).inflate(R.layout.activity_favourite, null, false);
+        drawer.addView(view, 0);
         recyclerView = findViewById(R.id.favRecycler);
         //saveFavouritesBtn = findViewById(R.id.saveToFavBtn);
         database = FirebaseDatabase.getInstance();
         favourites = database.getReference();
         favouriteslList = new ArrayList<>();
-        getFavouriteslCocktailList();
+        getFavouritesCocktailList();
 
     }
 
-    public void getFavouriteslCocktailList() {
+    public void getFavouritesCocktailList() {
         database.getReference("Favourites Cocktails").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

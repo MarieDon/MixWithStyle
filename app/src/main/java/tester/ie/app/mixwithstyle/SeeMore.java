@@ -7,7 +7,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import tester.ie.app.mixwithstyle.adapters.IngredientsAdapter;
 import tester.ie.app.mixwithstyle.adapters.ViewPagerAdapter;
 import tester.ie.app.mixwithstyle.model.Cocktail;
 import tester.ie.app.mixwithstyle.model.FavouriteCocktails;
@@ -40,9 +44,8 @@ import tester.ie.app.mixwithstyle.utils.PreferenceHelper;
 
 import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 
-public class SeeMore extends AppCompatActivity
+public class SeeMore extends BaseActivity
 {
-    public static final String DETAILSURL = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
     public String cocktailID;
     String id, imageUrl, title, desc;
     float rating;
@@ -51,26 +54,38 @@ public class SeeMore extends AppCompatActivity
     private RequestQueue queue;
     private ImageView cocktailDetailsImg;
     private TextView cocktailDetailsTitle;
-    private TabLayout tablayout;
-    private ViewPager viewPager;
     private FirebaseDatabase database;
     private DatabaseReference favourites;
     private FavouriteCocktails myFavourites;
     private FloatingActionButton favFab;
+    private TextView ingred1;
+    private TextView ingred2;
+    private TextView ingred3;
+    private TextView ingred4;
+    private TextView ingred5;
+    private TextView ingred6;
+    private IngredientsAdapter adapter;
+    private RecyclerView ingredientsRV;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_see_more);
+        View view = LayoutInflater.from(this).inflate(R.layout.activity_see_more, null, false);
+        drawer.addView(view, 0);
         database = FirebaseDatabase.getInstance();
         favourites = database.getReference("Favourites Cocktails");
         favFab = findViewById(R.id.floatingActionButton);
         bundle = new Bundle();
         cocktailDetailsImg = findViewById(R.id.cocktail_details_img);
         cocktailDetailsTitle = findViewById(R.id.cocktail_details_title);
-        tablayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewpager);
+        ingredientsRV = view.findViewById(R.id.ingredients_rv);
+        ingred1 = findViewById(R.id.ingred1);
+        ingred2 = findViewById(R.id.ingred2);
+        ingred3 = findViewById(R.id.ingred3);
+        ingred4 = findViewById(R.id.ingred4);
+        ingred5 = findViewById(R.id.ingred5);
+        ingred6 = findViewById(R.id.ingred6);
         queue = Volley.newRequestQueue(this);
         cocktails = (Cocktail) getIntent().getSerializableExtra("cocktail");
         id = cocktails.getDrinkID();
@@ -87,30 +102,33 @@ public class SeeMore extends AppCompatActivity
         });
 
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
-        // Set the adapter onto the view pager
-        viewPager.setAdapter(adapter);
 
-        // Give the TabLayout the ViewPager
-        tablayout.setupWithViewPager(viewPager);
-        tablayout.getTabAt(0).setText("Ingredients");
-        tablayout.getTabAt(1).setText("Method");
-        tablayout.setTabTextColors(R.color.colorBlack, R.color.colorPrimary);
 
-        getCocktailDetails(id);
 
 
     }
 
-    private void getCocktailDetails(String id) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCocktailDetails(id, cocktailDetailsTitle, cocktailDetailsImg);
+    }
+
+    private void saveToFirebase(String imageUrl, String title, String desc, float rating){
+        String firebaseId = database.getReference("Favourite Cocktails").push().getKey();
+        myFavourites = new FavouriteCocktails(imageUrl, title, desc,  rating);
+        favourites.child(firebaseId).setValue(myFavourites);
+    }
+
+    public void getCocktailDetails(String id, final TextView title, final ImageView img) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constants.DETAILSURL + id, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try{
                     JSONArray drink = response.getJSONArray("drinks");
                     JSONObject drinkObj = drink.getJSONObject(0);
-                    Picasso.get().load(drinkObj.getString("strDrinkThumb")).into(cocktailDetailsImg);
-                    cocktailDetailsTitle.setText(drinkObj.getString("strDrink"));
+                    Picasso.get().load(drinkObj.getString("strDrinkThumb")).into(img);
+                    title.setText(drinkObj.getString("strDrink"));
                     IngredientsList.INGREDIENTS.clear();
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient1"));
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient2"));
@@ -118,8 +136,12 @@ public class SeeMore extends AppCompatActivity
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient4"));
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient5"));
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient6"));
-                    desc = drinkObj.getString("strInstructions");
-                    PreferenceHelper.putPref("Desc", desc, getApplicationContext());
+                    String desc = drinkObj.getString("strInstructions");
+
+                    ingredientsRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    adapter = new IngredientsAdapter(getApplicationContext(), IngredientsList.INGREDIENTS);
+                    ingredientsRV.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -136,11 +158,8 @@ public class SeeMore extends AppCompatActivity
         queue.add(jsonObjectRequest);
     }
 
+    public void logout(View view){
 
-    private void saveToFirebase(String imageUrl, String title, String desc, float rating){
-        String firebaseId = database.getReference("Favourite Cocktails").push().getKey();
-        myFavourites = new FavouriteCocktails(imageUrl, title, desc,  rating);
-        favourites.child(firebaseId).setValue(myFavourites);
-        startActivity(new Intent(SeeMore.this, FavouriteActivity.class));
     }
+
 }

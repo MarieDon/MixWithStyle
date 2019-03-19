@@ -63,9 +63,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
     public void onBindViewHolder(FavouritesAdapter.ViewHolder holder, int position) {
         FavouriteCocktails favourites = favouritesList.get(position);
         String cocktailImage = favourites.getImage();
-        Log.i("FAVOURITES", favourites.getTitle());
-        Log.i("FAVOURITES", favourites.getDescription());
-        Log.i("FAVOURITES", favourites.getImage());
         holder.title.setText(favourites.getTitle());
         //holder.moreDetails.setText(cocktails.getDescription());
         Picasso.get().load(cocktailImage).into(holder.image);

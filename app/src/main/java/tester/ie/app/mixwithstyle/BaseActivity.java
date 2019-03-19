@@ -10,11 +10,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import tester.ie.app.mixwithstyle.utils.Constants;
+import tester.ie.app.mixwithstyle.utils.IngredientsList;
+import tester.ie.app.mixwithstyle.utils.PreferenceHelper;
 
 public class BaseActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener{
     public DrawerLayout drawer;
     public Toolbar toolbar;
+    private RequestQueue queue;
+    private FirebaseAuth mAuth;
 
 
 
@@ -23,14 +47,25 @@ public class BaseActivity extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mAuth = FirebaseAuth.getInstance();
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        queue = Volley.newRequestQueue(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    public void logout(View view){
+        mAuth.signOut();
     }
 
     @Override
@@ -78,6 +113,8 @@ public class BaseActivity extends AppCompatActivity
             startActivity(new Intent(BaseActivity.this, FavouriteActivity.class));
 
         } else if (id == R.id.logout) {
+            mAuth.signOut();
+                startActivity(new Intent(BaseActivity.this, LoginActivity.class));
 
         } else if (id == R.id.search_drink) {
 
@@ -88,4 +125,46 @@ public class BaseActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /**
+     *
+     * @param id
+     * @param title pass in the textview for title
+     * @param img pass in the image for the cocktail
+     */
+    //Get the details of the cocktail that was clicked on
+    public void getCocktailDetails(String id, final TextView title, final ImageView img) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constants.DETAILSURL + id, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONArray drink = response.getJSONArray("drinks");
+                    JSONObject drinkObj = drink.getJSONObject(0);
+                    Picasso.get().load(drinkObj.getString("strDrinkThumb")).into(img);
+                    title.setText(drinkObj.getString("strDrink"));
+                    IngredientsList.INGREDIENTS.clear();
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient1"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient2"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient3"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient4"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient5"));
+                    IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient6"));
+                    String desc = drinkObj.getString("strInstructions");
+                    PreferenceHelper.putPref("Desc", desc, getApplicationContext());
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Error: ", error.getMessage());
+
+            }
+        });
+
+        queue.add(jsonObjectRequest);
+    }
+
 }

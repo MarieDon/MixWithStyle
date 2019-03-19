@@ -7,6 +7,13 @@
     tools:context="tester.ie.app.mixwithstyle.SeeMore"
     android:background="#F4F8FF">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.10"/>
+
     <ImageView
         android:id="@+id/cocktail_details_img"
         android:layout_width="150dp"
@@ -16,7 +23,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top"
         app:srcCompat="@drawable/bg" />
 
     <TextView
@@ -33,37 +40,83 @@
         app:layout_constraintTop_toBottomOf="@+id/cocktail_details_img"
         tools:text="Sex on the Beach" />
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ingredients_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="#F4F8FF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cocktail_details_title">
+        app:layout_constraintTop_toBottomOf="@+id/cocktail_details_title" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp" />
+    <TextView
+        android:id="@+id/ingred1"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/cocktail_details_title"
+        app:layout_constraintStart_toStartOf="@+id/cocktail_details_title"
+        app:layout_constraintTop_toBottomOf="@+id/cocktail_details_title"
+        tools:text="Ingredients" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite" />
-    </android.support.design.widget.CoordinatorLayout>
+    <TextView
+        android:id="@+id/ingred6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingred5"
+        app:layout_constraintStart_toStartOf="@+id/ingred5"
+        app:layout_constraintTop_toBottomOf="@+id/ingred5"
+        tools:text="Ingredients" />
+
+    <TextView
+        android:id="@+id/ingred5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingred4"
+        app:layout_constraintStart_toStartOf="@+id/ingred4"
+        app:layout_constraintTop_toBottomOf="@+id/ingred4"
+        tools:text="Ingredients" />
+
+    <TextView
+        android:id="@+id/ingred2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingred1"
+        app:layout_constraintStart_toStartOf="@+id/ingred1"
+        app:layout_constraintTop_toBottomOf="@+id/ingred1"
+        tools:text="Ingredients" />
+
+    <TextView
+        android:id="@+id/ingred3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingred2"
+        app:layout_constraintStart_toStartOf="@+id/ingred2"
+        app:layout_constraintTop_toBottomOf="@+id/ingred2"
+        tools:text="Ingredients" />
+
+    <TextView
+        android:id="@+id/ingred4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/ingred3"
+        app:layout_constraintStart_toStartOf="@+id/ingred3"
+        app:layout_constraintTop_toBottomOf="@+id/ingred3"
+        tools:text="Ingredients" />
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
