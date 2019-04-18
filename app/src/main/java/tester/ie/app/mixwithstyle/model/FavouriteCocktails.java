@@ -8,6 +8,8 @@ public class FavouriteCocktails {
     public String title;
     public String description;
     public float rating;
+    public String glassType;
+    public boolean isAlcoholic;
 
     public FavouriteCocktails() {
     }
@@ -17,6 +19,16 @@ public class FavouriteCocktails {
         this.title = title;
         this.description = description;
         this.rating = rating;
+    }
+
+    public FavouriteCocktails(String image, String title, String description, float rating,
+                              String glassType, boolean isAlcoholic) {
+        this.image = image;
+        this.title = title;
+        this.description = description;
+        this.rating = rating;
+        this.glassType = glassType;
+        this.isAlcoholic = isAlcoholic;
     }
 
     public String getId() {
@@ -59,13 +71,24 @@ public class FavouriteCocktails {
         this.rating = rating;
     }
 
+    public String getGlassType() { return glassType; }
+
+    public void setGlassType(String glassType) { this.glassType = glassType; }
+
+    public boolean isAlcoholic() { return isAlcoholic; }
+
+    public void setAlcoholic(boolean alcoholic) { isAlcoholic = alcoholic; }
+
     @Override
     public String toString() {
         return "FavouriteCocktails{" +
-                "image='" + image + '\'' +
+                "id='" + id + '\'' +
+                ", image='" + image + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
+                ", glassType='" + glassType + '\'' +
+                ", isAlcoholic=" + isAlcoholic +
                 '}';
     }
 }

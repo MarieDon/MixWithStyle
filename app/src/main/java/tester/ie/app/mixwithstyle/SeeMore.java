@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,8 @@ import static tester.ie.app.mixwithstyle.MainActivity.INGREDIENTS;
 public class SeeMore extends BaseActivity
 {
     public String cocktailID;
-    String id, imageUrl, title, desc;
+    String id, imageUrl, title, desc, glass;
+    public boolean isAlcoholic;
     float rating;
     public Bundle bundle;
     private Cocktail cocktails;
@@ -58,12 +60,9 @@ public class SeeMore extends BaseActivity
     private DatabaseReference favourites;
     private FavouriteCocktails myFavourites;
     private FloatingActionButton favFab;
-    private TextView ingred1;
-    private TextView ingred2;
-    private TextView ingred3;
-    private TextView ingred4;
-    private TextView ingred5;
-    private TextView ingred6;
+    private Button ingredBtn;
+    private Button methodBtn;
+    private TextView methodText;
     private IngredientsAdapter adapter;
     private RecyclerView ingredientsRV;
 
@@ -79,25 +78,48 @@ public class SeeMore extends BaseActivity
         bundle = new Bundle();
         cocktailDetailsImg = findViewById(R.id.cocktail_details_img);
         cocktailDetailsTitle = findViewById(R.id.cocktail_details_title);
-        ingredientsRV = view.findViewById(R.id.ingredients_rv);
-        ingred1 = findViewById(R.id.ingred1);
-        ingred2 = findViewById(R.id.ingred2);
-        ingred3 = findViewById(R.id.ingred3);
-        ingred4 = findViewById(R.id.ingred4);
-        ingred5 = findViewById(R.id.ingred5);
-        ingred6 = findViewById(R.id.ingred6);
+        ingredientsRV = findViewById(R.id.ingredients_rv);
+        ingredBtn = findViewById(R.id.ingredients_btn);
+        methodBtn = findViewById(R.id.method_btn);
+        methodText = findViewById(R.id.method_text);
         queue = Volley.newRequestQueue(this);
         cocktails = (Cocktail) getIntent().getSerializableExtra("cocktail");
         id = cocktails.getDrinkID();
         imageUrl = cocktails.getImage();
         title = cocktails.getTitle();
         desc = cocktails.getDescription();
-        rating = cocktails.getRating();
+        rating = cocktails.getDrinksRating();
+        ingredBtn.setVisibility(View.GONE);
+        methodText.setVisibility(View.GONE);
 
         favFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveToFirebase(imageUrl, title, desc, rating);
+                favFab.setImageResource(R.drawable.ic_favorite_filled);
+                Toast.makeText(SeeMore.this, "Added to favourites", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+        ingredBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                methodBtn.setVisibility(View.VISIBLE);
+                ingredBtn.setVisibility(View.GONE);
+                ingredientsRV.setVisibility(View.VISIBLE);
+                methodText.setVisibility(View.GONE);
+            }
+        });
+
+        methodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                methodBtn.setVisibility(View.GONE);
+                ingredBtn.setVisibility(View.VISIBLE);
+                ingredientsRV.setVisibility(View.GONE);
+                methodText.setVisibility(View.VISIBLE);
             }
         });
 
@@ -137,6 +159,8 @@ public class SeeMore extends BaseActivity
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient5"));
                     IngredientsList.INGREDIENTS.add(drinkObj.getString("strIngredient6"));
                     String desc = drinkObj.getString("strInstructions");
+
+                    methodText.setText(desc);
 
                     ingredientsRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     adapter = new IngredientsAdapter(getApplicationContext(), IngredientsList.INGREDIENTS);

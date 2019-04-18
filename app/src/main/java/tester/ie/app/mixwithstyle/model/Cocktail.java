@@ -14,7 +14,6 @@ public class Cocktail implements Serializable {
     public String image;
     public String title;
     public String description;
-    public ArrayList<String> ingredientsList;
     public float rating;
     public String drinkID;
 
@@ -23,12 +22,11 @@ public class Cocktail implements Serializable {
     public Cocktail() {
     }
 
-    public Cocktail(String image, String title, String description, float rating, ArrayList<String> ingredientsList) {
+    public Cocktail(String image, String title, String description, float rating) {
         this.image = image;
         this.title = title;
         this.description = description;
         this.rating = rating;
-        this.ingredientsList = ingredientsList;
     }
 
     public String getImage() {
@@ -43,7 +41,7 @@ public class Cocktail implements Serializable {
         return description;
     }
 
-    public float getRating() {
+    public float getDrinksRating() {
         return rating;
     }
 
@@ -59,7 +57,7 @@ public class Cocktail implements Serializable {
         this.description = description;
     }
 
-    public void setRating(float rating) {
+    public void setDrinksRating(float rating) {
         this.rating = rating;
     }
 
@@ -67,11 +65,4 @@ public class Cocktail implements Serializable {
 
     public String getDrinkID() { return drinkID; }
 
-    public ArrayList<String> getIngredientsList() {
-        return ingredientsList;
-    }
-
-    public void setIngredientsList(ArrayList<String> ingredientsList) {
-        this.ingredientsList = ingredientsList;
-    }
 }

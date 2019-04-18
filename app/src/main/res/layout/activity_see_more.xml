@@ -51,71 +51,64 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="#F4F8FF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/method_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cocktail_details_title" />
 
-    <TextView
-        android:id="@+id/ingred1"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/cocktail_details_title"
-        app:layout_constraintStart_toStartOf="@+id/cocktail_details_title"
-        app:layout_constraintTop_toBottomOf="@+id/cocktail_details_title"
-        tools:text="Ingredients" />
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/method_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cocktail_details_img">
 
-    <TextView
-        android:id="@+id/ingred6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/ingred5"
-        app:layout_constraintStart_toStartOf="@+id/ingred5"
-        app:layout_constraintTop_toBottomOf="@+id/ingred5"
-        tools:text="Ingredients" />
+        <TextView
+            android:id="@+id/method_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="3dp"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            tools:text="Method" />
 
-    <TextView
-        android:id="@+id/ingred5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/ingred4"
-        app:layout_constraintStart_toStartOf="@+id/ingred4"
-        app:layout_constraintTop_toBottomOf="@+id/ingred4"
-        tools:text="Ingredients" />
+    </ScrollView>
 
-    <TextView
-        android:id="@+id/ingred2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/ingred1"
-        app:layout_constraintStart_toStartOf="@+id/ingred1"
-        app:layout_constraintTop_toBottomOf="@+id/ingred1"
-        tools:text="Ingredients" />
 
-    <TextView
-        android:id="@+id/ingred3"
+    <Button
+        android:id="@+id/ingredients_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/ingred2"
-        app:layout_constraintStart_toStartOf="@+id/ingred2"
-        app:layout_constraintTop_toBottomOf="@+id/ingred2"
-        tools:text="Ingredients" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Ingredients"
+        android:background="@drawable/button_background"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/ingred4"
+    <Button
+        android:id="@+id/method_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/ingred3"
-        app:layout_constraintStart_toStartOf="@+id/ingred3"
-        app:layout_constraintTop_toBottomOf="@+id/ingred3"
-        tools:text="Ingredients" />
-
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorWhite"
+        android:text="Make this cocktail"
+        android:background="@drawable/button_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
     <android.support.design.widget.FloatingActionButton
@@ -124,13 +117,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
+        android:layout_marginBottom="13dp"
         android:background="#F4F8FF"
+        android:clickable="true"
+        app:backgroundTint="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_favorite"
-        tools:ignore="VectorDrawableCompat"
-        />
+        tools:ignore="VectorDrawableCompat" />
 
 </android.support.constraint.ConstraintLayout>

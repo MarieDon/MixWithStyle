@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,10 @@ public class BaseActivity extends AppCompatActivity
     public Toolbar toolbar;
     private RequestQueue queue;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    public TextView username;
+    public TextView email;
+
 
 
 
@@ -48,14 +53,30 @@ public class BaseActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+
         drawer = findViewById(R.id.drawer_layout);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View navHeaderView = navigationView.getHeaderView(0);
+        username = navHeaderView.findViewById(R.id.username);
+        email = navHeaderView.findViewById(R.id.user_email);
+        username.setText(user.getDisplayName());
+         email.setText(user.getEmail());
+
         queue = Volley.newRequestQueue(this);
+
+        Log.i("USER", "Hello " + mAuth.getCurrentUser().getDisplayName() + " " + user.getEmail().toString());
+
+
+
     }
 
     @Override
@@ -165,6 +186,10 @@ public class BaseActivity extends AppCompatActivity
         });
 
         queue.add(jsonObjectRequest);
+    }
+
+    public void setNavHeaderText(){
+
     }
 
 }

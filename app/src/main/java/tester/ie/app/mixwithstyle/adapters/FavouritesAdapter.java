@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +65,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         FavouriteCocktails favourites = favouritesList.get(position);
         String cocktailImage = favourites.getImage();
         holder.title.setText(favourites.getTitle());
-        //holder.moreDetails.setText(cocktails.getDescription());
+        holder.ratingBar.setRating(favourites.getRating());
         Picasso.get().load(cocktailImage).into(holder.image);
 
     }
@@ -82,6 +83,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
 
         public TextView title;
         public ImageView image;
+        public RatingBar ratingBar;
 
         public ViewHolder(View itemView, final Context context) {
             super(itemView);
@@ -89,6 +91,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
             itemView.setOnClickListener(this); // bind the listener
             title = itemView.findViewById(R.id.favourites_text);
             image = itemView.findViewById(R.id.favourites_image);
+            ratingBar = itemView.findViewById(R.id.favouritesRating);
         }
 
         @Override

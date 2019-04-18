@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 
@@ -48,6 +49,7 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
         Cocktail cocktails = cocktailList.get(position);
         String cocktailImage = cocktails.getImage();
         holder.title.setText(cocktails.getTitle());
+        holder.rating.setRating(cocktails.getDrinksRating());
 //        holder.moreDetails.setText(cocktails.getDescription());
         Picasso.get().load(cocktailImage).into(holder.image);
 
@@ -61,18 +63,20 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
-        public Button faves;
         public ImageView image;
+        public RatingBar rating;
 
         public ViewHolder(View itemView, final Context context) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
             image = itemView.findViewById(R.id.cocktail_image);
+            rating = itemView.findViewById(R.id.ratingBar);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Cocktail cocktail = cocktailList.get(getAdapterPosition());
+                    cocktail.setDrinksRating(rating.getRating());
                     Intent intent = new Intent(context, SeeMore.class);
                     intent.putExtra("cocktail",  cocktail);
                     ctx.startActivity(intent);
@@ -80,14 +84,6 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.ViewHo
 
                 }
             });
-
-//            faves.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    faves.setCompoundDrawablesWithIntrinsicBounds(null, null, v.getResources().getDrawable(android.R.drawable.btn_star_big_on),null);
-//                }
-//            });
-
         }
 
 
