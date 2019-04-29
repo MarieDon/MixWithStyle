@@ -73,7 +73,8 @@ Another cool feature of the app, is that you can search the cocktails by their i
 
 
 ## DEMO
-[Youtube Demo](https://youtu.be/9cAR3IYOUOc)
+[App Demo](https://www.youtube.com/watch?v=tHKFuTVVAKI)
+[Firebase Demo](https://www.youtube.com/watch?v=KzDcY9YjA9M)
 
 ## REFERENCES
 
@@ -89,6 +90,6 @@ Another cool feature of the app, is that you can search the cocktails by their i
 
 [Firebase Sorting](https://stackoverflow.com/questions/40198291/how-to-sort-by-children-key-value-in-firebase)
 
-[Canva Logo Maker] ()
+[Canva Logo Maker](https://www.canva.com/)
 
-[Navigation Drawer] (https://code.tutsplus.com/tutorials/how-to-code-a-navigation-drawer-in-an-android-app--cms-30263)
+[Navigation Drawer](https://code.tutsplus.com/tutorials/how-to-code-a-navigation-drawer-in-an-android-app--cms-30263)
