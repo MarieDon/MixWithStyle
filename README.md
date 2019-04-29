@@ -35,7 +35,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
 ````
     
 ### Hiding my ingredients and methods button hack
-    ````java
+````java
     ingredBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -59,8 +59,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
 
     }
     });
-
-    ````
+````
 
 
 
