@@ -17,7 +17,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
 
 ### Search Function
 ````java
-    searchBtn.setOnClickListener(new View.OnClickListener(){
+ searchBtn.setOnClickListener(new View.OnClickListener(){
     @Override
     public void onClick(final View view) {
     if (!search.getText().toString().equals("")) {
@@ -32,7 +32,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
     }
     }
     });
-    ``
+````
     ### Hiding my ingredients and methods button hack
     ````java
     ingredBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
     }
     });
 
-    ``
+    ````
 
 
 
