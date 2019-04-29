@@ -16,7 +16,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
     this give you a list of cocktails back that has the ingredient that you typed in the search bar.
 
 ### Search Function
-``
+````java
     searchBtn.setOnClickListener(new View.OnClickListener(){
     @Override
     public void onClick(final View view) {
@@ -32,9 +32,9 @@ Another cool feature of the app, is that you can search the cocktails by their i
     }
     }
     });
-    ``
+    ````
     ### Hiding my ingredients and methods button hack
-    ``
+    ````java
     ingredBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -59,7 +59,7 @@ Another cool feature of the app, is that you can search the cocktails by their i
     }
     });
 
-    ``
+    ````
 
 
 
