@@ -55,6 +55,7 @@ public class FavouriteActivity extends BaseActivity implements FavouritesAdapter
     private Button saveFavouritesBtn;
     private FirebaseDatabase database;
     private DatabaseReference favourites;
+
     String id = "";
 
     @Override
@@ -62,12 +63,14 @@ public class FavouriteActivity extends BaseActivity implements FavouritesAdapter
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(this).inflate(R.layout.activity_favourite, null, false);
         drawer.addView(view, 0);
+        this.setTitle("Favourite Cocktails");
         recyclerView = findViewById(R.id.favRecycler);
-        //saveFavouritesBtn = findViewById(R.id.saveToFavBtn);
         database = FirebaseDatabase.getInstance();
         favourites = database.getReference();
         favouriteslList = new ArrayList<>();
         getFavouritesCocktailList();
+
+
 
     }
 
@@ -76,16 +79,16 @@ public class FavouriteActivity extends BaseActivity implements FavouritesAdapter
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                  favouriteslList.clear();
-                  for(DataSnapshot myfaves : dataSnapshot.getChildren()){
-                      FavouriteCocktails favecocktails = myfaves.getValue(FavouriteCocktails.class);
-                      favecocktails.setId(myfaves.getKey());
-                      favouriteslList.add(favecocktails);
-                      recyclerView.setLayoutManager(new LinearLayoutManager(FavouriteActivity.this));
-                      favouritesAdapter = new FavouritesAdapter(favouriteslList, FavouriteActivity.this);
-                      favouritesAdapter.setClickListener(FavouriteActivity.this);
-                      recyclerView.setAdapter(favouritesAdapter);
-                  }
+                    favouriteslList.clear();
+                    for(DataSnapshot myfaves : dataSnapshot.getChildren()){
+                        FavouriteCocktails favecocktails = myfaves.getValue(FavouriteCocktails.class);
+                        favecocktails.setId(myfaves.getKey());
+                        favouriteslList.add(favecocktails);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(FavouriteActivity.this));
+                        favouritesAdapter = new FavouritesAdapter(favouriteslList, FavouriteActivity.this);
+                        favouritesAdapter.setClickListener(FavouriteActivity.this);
+                        recyclerView.setAdapter(favouritesAdapter);
+                    }
                     Collections.reverse(favouriteslList);
                     favouritesAdapter.notifyDataSetChanged();
                 }
@@ -121,4 +124,3 @@ public class FavouriteActivity extends BaseActivity implements FavouritesAdapter
         favouritesAdapter.notifyDataSetChanged();
     }
 }
-

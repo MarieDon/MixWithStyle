@@ -49,7 +49,6 @@ public class CocktailRecyclerView extends BaseActivity {
     private RecyclerView recyclerView;
     private List<Cocktail> cocktailList;
     private CocktailAdapter cocktailAdapter;
-    private Button saveFavouritesBtn;
     private EditText search;
     private Button searchBtn;
     private FirebaseAuth mAuth;
@@ -61,29 +60,32 @@ public class CocktailRecyclerView extends BaseActivity {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(this).inflate(R.layout.activity_recycler, null, false);
         drawer.addView(view, 0);
-        mySearch = "c=cocktail";
-
+        this.setTitle(" Cocktail List");
+        search = view.findViewById(R.id.search);
+        searchBtn = view.findViewById(R.id.searchBtn);
+        mySearch = "c=Cocktail";
         mAuth = FirebaseAuth.getInstance();
         queue = Volley.newRequestQueue(this);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         cocktailList = new ArrayList<>();
         cocktailList = getCocktailList(mySearch);
-        search = findViewById(R.id.search);
-        searchBtn = findViewById(R.id.searchBtn);
-
-
         cocktailAdapter = new CocktailAdapter(cocktailList, this);
         recyclerView.setAdapter(cocktailAdapter);
         cocktailAdapter.notifyDataSetChanged();
         user = mAuth.getCurrentUser();
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(final View view) {
                 if (!search.getText().toString().equals("")) {
                     mySearch = "i=" + search.getText().toString();
-                    getCocktailList(mySearch);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(CocktailRecyclerView.this));
+                    cocktailList = new ArrayList<>();
+                    cocktailList = getCocktailList(mySearch);
+                    cocktailAdapter = new CocktailAdapter(cocktailList, CocktailRecyclerView.this);
+                    recyclerView.setAdapter(cocktailAdapter);
+                    cocktailAdapter.notifyDataSetChanged();
+
                 }
             }
         });
@@ -94,7 +96,7 @@ public class CocktailRecyclerView extends BaseActivity {
 
     public List<Cocktail> getCocktailList(String search)
     {
-        JsonObjectRequest CocktailRequest = new JsonObjectRequest(Request.Method.GET, Constants.URL+"filter.php?" + search, new Response.Listener<JSONObject>() {
+        JsonObjectRequest CocktailRequest = new JsonObjectRequest(Request.Method.GET, Constants.URL + search, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -126,8 +128,5 @@ public class CocktailRecyclerView extends BaseActivity {
         queue.add(CocktailRequest);
         return cocktailList;
     }
-
-
-
-
 }
+

@@ -66,6 +66,8 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         String cocktailImage = favourites.getImage();
         holder.title.setText(favourites.getTitle());
         holder.ratingBar.setRating(favourites.getRating());
+        holder.ratingBar.setIsIndicator(true);
+        holder.ratingBar.setClickable(false);
         Picasso.get().load(cocktailImage).into(holder.image);
 
     }
@@ -100,4 +102,5 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Vi
         }
     }
 }
+
 

@@ -75,6 +75,7 @@ public class SeeMore extends BaseActivity
         database = FirebaseDatabase.getInstance();
         favourites = database.getReference("Favourites Cocktails");
         favFab = findViewById(R.id.floatingActionButton);
+        this.setTitle("Cocktail Ingredients");
         bundle = new Bundle();
         cocktailDetailsImg = findViewById(R.id.cocktail_details_img);
         cocktailDetailsTitle = findViewById(R.id.cocktail_details_title);
@@ -110,6 +111,8 @@ public class SeeMore extends BaseActivity
                 ingredBtn.setVisibility(View.GONE);
                 ingredientsRV.setVisibility(View.VISIBLE);
                 methodText.setVisibility(View.GONE);
+                SeeMore.this.setTitle("Cocktail Ingredients");
+
             }
         });
 
@@ -120,6 +123,8 @@ public class SeeMore extends BaseActivity
                 ingredBtn.setVisibility(View.VISIBLE);
                 ingredientsRV.setVisibility(View.GONE);
                 methodText.setVisibility(View.VISIBLE);
+                SeeMore.this.setTitle("Method");
+
             }
         });
 

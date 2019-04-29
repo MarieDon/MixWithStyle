@@ -62,6 +62,8 @@
         android:layout_marginRight="28dp"
         android:layout_marginBottom="28dp"
         android:text="Login"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -73,6 +75,8 @@
         android:layout_marginLeft="28dp"
         android:layout_marginBottom="28dp"
         android:text="New User"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
